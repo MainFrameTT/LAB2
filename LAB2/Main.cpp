@@ -103,9 +103,18 @@ void handleChoice() {
         int filter = safeIntInput("1. By name\n2. By repair status\nEnter filter: ");
         if (filter == 1) {
             string name = safeStringInput("Enter pipe name: ");
+            bool found = false;
             for (const auto& pipe : pipes) {
                 if (pipe.getName() == name) {
                     pipe.print();
+                    found = true;
+                }
+            }
+            if (!found) {
+                cout << "No pipes with name " << name << " found." << endl;
+                cout << "Available pipes:" << endl;
+                for (const auto& pipe : pipes) {
+                    cout << pipe.getName() << endl;
                 }
             }
         }
@@ -126,9 +135,18 @@ void handleChoice() {
         int filter = safeIntInput("1. By name\n2. By unused shop percentage\nEnter filter: ");
         if (filter == 1) {
             string name = safeStringInput("Enter compressor station name: ");
+            bool found = false;
             for (const auto& cs : compressorStations) {
                 if (cs.getName() == name) {
                     cs.print();
+                    found = true;
+                }
+            }
+            if (!found) {
+                cout << "No compressor stations with name " << name << " found." << endl;
+                cout << "Available compressor stations:" << endl;
+                for (const auto& cs : compressorStations) {
+                    cout << cs.getName() << endl;
                 }
             }
         }
