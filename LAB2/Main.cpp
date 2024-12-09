@@ -173,12 +173,26 @@ void handleChoice() {
                     selectedPipes.push_back(i);
                 }
             }
+            if (selectedPipes.empty()) {
+                cout << "No pipes with name " << name << " found." << endl;
+                cout << "Available pipes:" << endl;
+                for (const auto& pipe : pipes) {
+                    cout << pipe.getName() << endl;
+                }
+            }
         }
         else if (filter == 2) {
             bool inRepair = safeIntInput("In repair? (1 - yes, 0 - no): ") == 1;
             for (int i = 0; i < pipes.size(); ++i) {
                 if (pipes[i].isInRepair() == inRepair) {
                     selectedPipes.push_back(i);
+                }
+            }
+            if (selectedPipes.empty()) {
+                cout << "No pipes with the specified repair status found." << endl;
+                cout << "Available pipes:" << endl;
+                for (const auto& pipe : pipes) {
+                    cout << pipe.getName() << endl;
                 }
             }
         }
@@ -200,9 +214,10 @@ void handleChoice() {
             }
         }
         else if (action == 2) {
-            for (int id : selectedPipes) {
-                Logger::log("Pipe with ID " + to_string(id) + " deleted");
-                pipes.erase(pipes.begin() + id);
+            // Удаляем трубы в обратном порядке, чтобы индексы не сбивались
+            for (auto it = selectedPipes.rbegin(); it != selectedPipes.rend(); ++it) {
+                Logger::log("Pipe with ID " + to_string(*it) + " deleted");
+                pipes.erase(pipes.begin() + *it);
             }
         }
         else {
